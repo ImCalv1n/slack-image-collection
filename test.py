@@ -7,15 +7,18 @@ load_dotenv()
 ACCESS_TOKEN=os.getenv('ACCESS_TOKEN')
 TEST_URL=os.getenv('TEST_URL')
 USER_AGENT=os.getenv('USER_AGENT')
-test=os.getenv('test')
+TEST_CHANNEL=os.getenv('TEST_CHANNEL')
 
 def execute(endpoint_url):
         return requests.get(endpoint_url,
                             headers={'Authorization': 'Bearer {}'.format(ACCESS_TOKEN),
-                                    'User-Agent': USER_AGENT},).json()
+                                    'User-Agent': USER_AGENT},
+                            params={
+                                'channel': TEST_CHANNEL,
+                            }).json()
 
 if __name__ == '__main__':
-    
+
     collection = execute(TEST_URL)
     json_str = json.dumps(collection, indent=4)
     file = 'out/test_collection.json'
